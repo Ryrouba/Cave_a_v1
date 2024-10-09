@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/signup.css">
+    <title>Inscription</title>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="card-switch">
+            <label class="switch">
+               <input type="checkbox" class="toggle">
+               <span class="slider"></span>
+               <span class="card-side"></span>
+               <div class="flip-card__inner">
+                  <div class="flip-card__front">
+                     <div class="title">Log in</div>
+                     <form class="flip-card__form" action="/login" method="POST">
+                        <input class="flip-card__input" name="username" placeholder="Nom d'utilisateur" type="text" required>
+                        <input class="flip-card__input" name="password" placeholder="Mot de passe" type="password" required>
+                        <button class="flip-card__btn">Se connecter</button>
+                     </form>
+                  </div>
+                  <div class="flip-card__back">
+                     <div class="title">Sign up</div>
+                     <form class="flip-card__form" action="/signup" method="POST">
+                        <input class="flip-card__input" placeholder="Username" type="text" id="username" name="username" required>
+                        <input class="flip-card__input" name="password" placeholder="Password" type="password" id="password">
+                        <button class="flip-card__btn" type="submit">Inscription</button>
+                     </form>
+                  </div>
+               </div>
+            </label>
+        </div>   
+    </div>
+</body>
+</html>

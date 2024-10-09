@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/accueil.css">
+    <title>Accueil</title>
+</head>
+<body>
+    <div class="menu">
+        <img src="../static/images/wine.jpeg" alt="Logo" class="logo">
+        <ul>
+            <li><a href="#section1">Section 1</a></li>
+            <li><a href="#section2">Section 2</a></li>
+        </ul>
+    </div>
+
+    <div class="content-wrapper">
+        <div class="logout-column">
+            {% if 'username' in session %}
+                <a href="/logout" class="logout-button">Déconnexion</a>
+            {% endif %}
+        </div>
+        <div id="section1" class="section">
+            <div class="content section1-content">
+                <!-- Colonnes -->
+                
+            </div>
+        </div>
+
+        <div id="section2" class="section video-section">
+            <!-- Contenu de la section 2 -->
+            <div class="image-slider">
+                <div class="image-container">
+                    <img src="../static/images/wine7.jpeg" alt="Image 1">
+                </div>
+                <div class="image-container">
+                    <img src="../static/images/wine1.jpeg" alt="Image 2">
+                </div>
+                <!-- Ajoutez les autres images ici -->
+                <div class="image-container">
+                    <img src="../static/images/wine2.jpeg" alt="Image 3">
+                </div>
+                <div class="image-container">
+                    <img src="../static/images/wine3.jpeg" alt="Image 4">
+                </div>
+                <div class="image-container">
+                    <img src="../static/images/wine4.jpeg" alt="Image 5">
+                </div>
+                <div class="image-container">
+                    <img src="../static/images/wine5.jpeg" alt="Image 6">
+                </div>
+                <!-- Ajoutez les autres images ici -->
+            </div>
+        </div>
+
+    </div>
