@@ -1,0 +1,88 @@
+@import url('https://fonts.googleapis.com/css2?family=Satisfy&display=swap');
+
+.fixed-title {
+    position: fixed;/*  Garde le titre fixe sur l'écran */
+    top: 20px; /* Positionne le titre à 20px du haut */
+    left: 320px; /* Positionne le titre à 20px de la gauche */
+    z-index: 1000; /* S'assure que le titre est au-dessus des autres éléments */
+    font-size: 48px; /* Ajuste la taille de la police si nécessaire */
+    padding: 10px; /* Ajoute un padding pour espacer le texte des bords */
+    
+}
+
+h1, h3 {
+    font-family: 'Satisfy', cursive; /* Applique Satisfy à l'ensemble du corps */
+}
+
+.cave-container {
+    display: flex;
+    justify-content: space-between; /* Espace entre "Créer une Cave" et "Vos Caves" */
+    align-items: flex-start; /* Alignement en haut */
+    gap: 400px; /* Espace entre les deux sections */
+    padding: 50px;
+}
+
+.create-cave, .cave-list {
+    width: 60%; /* Chacune occupe 60% de la largeur disponible */
+    margin-top: 20px;
+}
+
+.create-cave form {
+    display: flex;
+    flex-direction: column;
+}
+
+.create-cave button {
+    margin-top: 10px; /* Espace entre l'input et le bouton */
+}
+
+.cave-list ul {
+    list-style-type: none; /* Enlève les puces de la liste */
+    padding: 0;
+}
+
+.cave-item {
+    display: flex;
+    justify-content: space-between; /* Aligne le nom de la cave et le bouton "Supprimer" */
+    margin-bottom: 10px; /* Espacement entre les items de la liste */
+}
+
+.cave-item span {
+    margin-right: 20px; /* Espace à droite du nom de la cave */
+}
+
+.cave-item form {
+    display: inline-block; /* Permet de garder le bouton de suppression aligné avec le nom de la cave */
+}
+
+h3 {
+    font-weight: bold; /* Met le texte en gras */
+}
+
+button {
+    padding: 5px 10px;
+    background-color: #fff;
+    border: 1px solid #000;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0adc42; /* Couleur au survol */
+}
+
+/* Tailles de police */
+.create-cave h3,
+.cave-list h3 {
+    font-size: 24px; /* Taille de police pour les titres des sections */
+}
+
+.create-cave label,
+.cave-list span {
+    font-size: 18px; /* Taille de police pour le label et les noms de cave */
+}
+
+.create-cave input,
+.create-cave button,
+.cave-list button {
+    font-size: 16px; /* Taille de police pour les champs d'entrée et les boutons */
+}

@@ -1,8 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=Satisfy&display=swap');
+
+h1 {
+    font-family: 'Satisfy', cursive; /* Applique Satisfy à l'ensemble du corps */
+    font-size: 48px; /* Ajuste la taille de la police si nécessaire */
+}
+
+p {
+    font-family: 'Satisfy', cursive; /* Applique Satisfy à l'ensemble du corps */
+    font-size: 27px; /* Ajuste la taille de la police si nécessaire */
+}
 /* Styles généraux */
 body {
     background-color: #800020;
     margin: 0;
-    font-family: Arial, sans-serif;
+    font-family: 'Satisfy', cursive;
     display: flex;
 }
 
@@ -12,6 +23,13 @@ body {
     background-color: #333;
     color: white;
     padding: 20px;
+    font-family: 'Satisfy', cursive;
+    font-size: 28px;
+    text-decoration: none;
+}
+
+.menu:hover{
+   text-decoration: underline;
 }
 
 .menu ul {
@@ -150,3 +168,21 @@ body {
     }
 }
 
+.presentation {
+    width: 600px; /* Définir la largeur à 600 pixels */
+    margin: 0 auto; /* Centrer le paragraphe horizontalement */
+}
+
+.button-export{
+    padding: 5px 10px;
+    background-color: #fff;
+    border: 1px solid #000;
+    cursor: pointer;
+    position: relative;
+    margin-left: 900px; /* Ajuster la distance à droite des commentaires */
+    top: -350px; /
+}
+
+.button-export:hover {
+   background-color: #0adc42;
+}

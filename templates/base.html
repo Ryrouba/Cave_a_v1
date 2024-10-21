@@ -3,15 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/static/css/accueil.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/accueil.css') }}">
     <title>Accueil</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/cave.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/etagere.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bouteille.css') }}">
 </head>
 <body>
+    
     <div class="menu">
-        <img src="../static/images/wine.jpeg" alt="Logo" class="logo">
+        <img src="{{ url_for('static', filename='images/wine.jpeg') }}" alt="Logo" class="logo">
         <ul>
-            <li><a href="#section1">Section 1</a></li>
-            <li><a href="#section2">Section 2</a></li>
+            <li><a href="{{ url_for('accueil') }}">Accueil</a></li>
+            <li><a href="{{ url_for('cave') }}">Cave(s)</a></li> <!-- c'est ici que on listera toutes les caves et toutes les bouteilles avec user. Sous forme de tableau si utilisateur admin est co -->
+            <li><a href="{{ url_for('etagere') }}">Etagère(s)</a></li>
+            <li><a href="{{ url_for('bouteille') }}">Bouteille(s)</a></li> 
         </ul>
     </div>
 
@@ -23,35 +29,33 @@
         </div>
         <div id="section1" class="section">
             <div class="content section1-content">
-                <!-- Colonnes -->
-                
+                {% block content %}
+                {% endblock %}
             </div>
         </div>
 
         <div id="section2" class="section video-section">
-            <!-- Contenu de la section 2 -->
             <div class="image-slider">
                 <div class="image-container">
-                    <img src="../static/images/wine7.jpeg" alt="Image 1">
+                    <img src="{{ url_for('static', filename='images/wine7.jpeg') }}" alt="Image 1">
                 </div>
                 <div class="image-container">
-                    <img src="../static/images/wine1.jpeg" alt="Image 2">
-                </div>
-                <!-- Ajoutez les autres images ici -->
-                <div class="image-container">
-                    <img src="../static/images/wine2.jpeg" alt="Image 3">
+                    <img src="{{ url_for('static', filename='images/wine1.jpeg') }}" alt="Image 2">
                 </div>
                 <div class="image-container">
-                    <img src="../static/images/wine3.jpeg" alt="Image 4">
+                    <img src="{{ url_for('static', filename='images/wine2.jpeg') }}" alt="Image 3">
                 </div>
                 <div class="image-container">
-                    <img src="../static/images/wine4.jpeg" alt="Image 5">
+                    <img src="{{ url_for('static', filename='images/wine3.jpeg') }}" alt="Image 4">
                 </div>
                 <div class="image-container">
-                    <img src="../static/images/wine5.jpeg" alt="Image 6">
+                    <img src="{{ url_for('static', filename='images/wine4.jpeg') }}" alt="Image 5">
                 </div>
-                <!-- Ajoutez les autres images ici -->
+                <div class="image-container">
+                    <img src="{{ url_for('static', filename='images/wine5.jpeg') }}" alt="Image 6">
+                </div>
             </div>
         </div>
-
     </div>
+</body>
+</html>

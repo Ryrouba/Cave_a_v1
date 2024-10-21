@@ -1,14 +1,23 @@
-{% extends 'base.html' %}
-
-{% block title %}
-    Liste des Bouteilles
-{% endblock %}
-
-{% block content %}
-    
-<div class="content-wrapper">
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste des Bouteilles</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bouteille.css') }}">
+</head>
+<body>
+    <div class="menu"></div>
+        <img src="{{ url_for('static', filename='images/wine.jpeg') }}" alt="Logo" class="logo">
+        <ul>
+            <li><a href="{{ url_for('accueil') }}">Accueil</a></li>
+            <!-- <li><a href="#section2">Section 2</a></li>  -->
+            <li><a href="{{ url_for('cave') }}">Cave(s)</a></li> <!-- c'est ici que on listera toutes les caves et toutes les bouteilles avec user. Sous forme de tableau si utilisateur admin est co -->
+            <li><a href="{{ url_for('etagere') }}">Etagère(s)</a></li>
+            <li><a href="{{ url_for('bouteille') }}">Bouteille(s)</a></li> 
+        </ul>
+    </div>
     <div class="section1">
-        <!-- Carte flip -->
         <div class="flip-card">
             <div class="flip-card-inner">
                 <div class="flip-card-front">
@@ -21,27 +30,23 @@
                     </div>
                 </div>
             </div>
+            <div class="navigation-buttons">
+                <button class="pushable" onclick="showPreviousBottle()">
+                    <span class="shadow"></span>
+                    <span class="edge"></span>
+                    <span class="front"><</span>
+                </button>
+                <button class="pushable" onclick="showNextBottle()">
+                    <span class="shadow"></span>
+                    <span class="edge"></span>
+                    <span class="front">></span>
+                </button>
+            </div>
         </div>
 
-        <!-- Boutons de navigation entre les bouteilles -->
-        <div class="navigation-buttons">
-            <button class="pushable" onclick="showPreviousBottle()">
-                <span class="shadow"></span>
-                <span class="edge"></span>
-                <span class="front"><</span>
-            </button>
-
-            <button class="pushable" onclick="showNextBottle()">
-                <span class="shadow"></span>
-                <span class="edge"></span>
-                <span class="front">></span>
-            </button>
-        </div>
-
-        <h1>Ajouter une Bouteille</h1>
         <!-- Formulaire à droite de la flip card -->
         <div class="form-container">
-            
+            <h1>Ajouter une Bouteille</h1>
             <form action="/bouteille" method="POST" enctype="multipart/form-data" class="formulaire">
                 <div>
                     <label for="winery">Vignoble :</label>
@@ -97,22 +102,19 @@
             </form>
         </div>
     </div>
-    
+
     <!-- Nouvelle section pour les étagères et bouteilles -->
     <div id="shelfSection" class="section shelves-section">
         <h2>Étagères et Bouteilles</h2>
         <div class="bottle-shelves">
             {% for shelf in shelves %}
                 <div class="shelf-container">
-                    <h3>Étagère : {{ shelf[2] }} Cave : {{ shelf[3] }}</h3>
+                    <h3>Étagère : {{ shelf[2] }}</h3>
                     <div class="bottles">
                         {% for bottle in bottles %}
                             {% if bottle[1] == shelf[0] %}
                                 <div class="bottle">
                                     <img src="{{ bottle[10] }}" alt="{{ bottle[2] }}" class="bottle-image">
-                                    <form action="/supprimer_bouteille/{{ bottle[0] }}" method="POST">
-                                        <button type="submit" class="delete-button">Supprimer</button>
-                                    </form>
                                 </div>
                             {% endif %}
                         {% endfor %}
@@ -121,56 +123,56 @@
             {% endfor %}
         </div>
     </div>
-</div>
 
-<script>
-    var bottles = {{ bottles | tojson }};
-    var currentBottleIndex = 0;
+    <script>
+        var bottles = {{ bottles | tojson }};
+        var currentBottleIndex = 0;
 
-    // Fonction pour afficher la bouteille suivante
-    function showNextBottle() {
-        if (currentBottleIndex < bottles.length - 1) {
-            currentBottleIndex++;
-            var currentBottle = bottles[currentBottleIndex];
-            displayBottle(currentBottle);
-        } else {
-            alert("Vous avez atteint la dernière bouteille.");
+        // Fonction pour afficher la bouteille suivante
+        function showNextBottle() {
+            if (currentBottleIndex < bottles.length - 1) {
+                currentBottleIndex++;
+                var currentBottle = bottles[currentBottleIndex];
+                displayBottle(currentBottle);
+            } else {
+                alert("Vous avez atteint la dernière bouteille.");
+            }
         }
-    }
 
-    // Fonction pour afficher la bouteille précédente
-    function showPreviousBottle() {
-        if (currentBottleIndex > 0) {
-            currentBottleIndex--;
-            var currentBottle = bottles[currentBottleIndex];
-            displayBottle(currentBottle);
-        } else {
-            alert("Vous êtes déjà à la première bouteille.");
+        // Fonction pour afficher la bouteille précédente
+        function showPreviousBottle() {
+            if (currentBottleIndex > 0) {
+                currentBottleIndex--;
+                var currentBottle = bottles[currentBottleIndex];
+                displayBottle(currentBottle);
+            } else {
+                alert("Vous êtes déjà à la première bouteille.");
+            }
         }
-    }
 
-    // Fonction pour afficher les détails de la bouteille
-    function displayBottle(bottle) {
-        var bottleHtml = `
-            <div class="bottle-container">
-                <p><strong>Vignoble :</strong> ${bottle[2]}</p>
-                <p><strong>Type :</strong> ${bottle[4]}</p>
-                <p><strong>Année :</strong> ${bottle[5]}</p>
-                <p><strong>Région :</strong> ${bottle[6]}</p>
-                <p><strong>Commentaires :</strong> ${bottle[7]}</p>
-                <p><strong>Note personnelle :</strong> ${bottle[8]}</p>
-                <p><strong>Note communautaire :</strong> ${bottle[9]}</p>
-                <p><strong>Prix :</strong> ${bottle[11]}</p>
-            </div>
-        `;
-        document.getElementById("bottleDisplay").innerHTML = bottleHtml;
-        document.getElementById("bottleImage").src = bottle[10];
-        document.getElementById("bottleName").textContent = bottle[3];
-    }
+        // Fonction pour afficher les détails de la bouteille
+        function displayBottle(bottle) {
+            var bottleHtml = `
+                <div class="bottle-container">
+                    <p><strong>Vignoble :</strong> ${bottle[2]}</p>
+                    <p><strong>Type :</strong> ${bottle[4]}</p>
+                    <p><strong>Année :</strong> ${bottle[5]}</p>
+                    <p><strong>Région :</strong> ${bottle[6]}</p>
+                    <p><strong>Commentaires :</strong> ${bottle[7]}</p>
+                    <p><strong>Note personnelle :</strong> ${bottle[8]}</p>
+                    <p><strong>Note communautaire :</strong> ${bottle[9]}</p>
+                    <p><strong>Prix :</strong> ${bottle[11]}</p>
+                </div>
+            `;
+            document.getElementById("bottleDisplay").innerHTML = bottleHtml;
+            document.getElementById("bottleImage").src = bottle[10];
+            document.getElementById("bottleName").textContent = bottle[3];
+        }
 
-    // Afficher la première bouteille au chargement de la page
-    if (bottles.length > 0) {
-        displayBottle(bottles[0]);
-    }
-</script>
-{% endblock %}
+        // Afficher la première bouteille au chargement de la page
+        if (bottles.length > 0) {
+            displayBottle(bottles[0]);
+        }
+    </script>
+</body>
+</html>

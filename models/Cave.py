@@ -22,7 +22,7 @@ class Cave:
         connection = create_connection()
         cursor = connection.cursor()
 
-        cursor.execute("DELETE FROM caves WHERE cave_id=%s", (cave_id,))
+        cursor.execute("DELETE FROM caves WHERE cave_id=%s", (cave_id,))  # Notez la virgule pour en faire un tuple
         connection.commit()
         connection.close()
         print("Cave supprimée avec succès.")

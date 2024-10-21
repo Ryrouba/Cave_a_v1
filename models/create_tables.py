@@ -27,6 +27,7 @@ def create_tables():
                 shelf_id INT AUTO_INCREMENT PRIMARY KEY,
                 cave_id INT,
                 shelf_name VARCHAR(255) NOT NULL,
+                
                 FOREIGN KEY (cave_id) REFERENCES caves(cave_id) ON DELETE CASCADE
             )
         """)

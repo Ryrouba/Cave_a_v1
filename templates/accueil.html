@@ -10,9 +10,9 @@
     <div class="menu">
         <img src="../static/images/wine.jpeg" alt="Logo" class="logo">
         <ul>
-            <li><a href="#section1">Section 1</a></li>
-            <li><a href="#section2">Section 2</a></li>
-            <li><a href="#section3">Section 3</a></li>
+            <li><a href="{{ url_for('cave') }}">Cave(s)</a></li> <!-- c'est ici que on listera toutes les caves et toutes les bouteilles avec user. Sous forme de tableau si utilisateur admin est co -->
+            <li><a href="{{ url_for('etagere') }}">Etagère(s)</a></li>
+            <li><a href="{{ url_for('bouteille') }}">Bouteille(s)</a></li>   
         </ul>
     </div>
     
@@ -27,7 +27,7 @@
                 <!-- Colonnes -->
                 <div class="user-info">
                     {% if 'username' in session %}
-                        <p>Bonjour, {{ session['username'] }}</p>  <!-- Utilisation de session pour le nom d'utilisateur -->
+                        <h1>Bonjour, {{ session['username'] }} !</h1>  <!-- Utilisation de session pour le nom d'utilisateur -->
                         <p>Nombre d'étagères : {{ user_info.num_shelves }}</p> <!-- Assurez-vous que user_info est défini dans votre route -->
                         <p>Nombre total de bouteilles : {{ user_info.bottles_count }}</p> <!-- Assurez-vous que user_info est défini -->
                         <p>Nombre de caves : {{ user_info.num_caves }}</p> <!-- Assurez-vous que user_info est défini -->
@@ -49,7 +49,14 @@
                         <a href="/signup" id="inscrire_boutton">INSCRIPTION</a>
                     {% endif %}
                 </div>
-                <a href="{{ url_for('bouteille') }}" class="button">BOUTEILLES</a>
+                <div class="presentation">
+                    
+                    <h2>Bienvenue sur Wine <img src="../static/images/vin_gif.gif" alt="Logo" class="logo"></h2>
+                    <p>
+                        Explorez le monde du vin avec Wine, votre plateforme idéale pour gérer vos caves à vin. Que vous soyez passionné ou novice, profitez d'une interface intuitive pour créer, organiser et découvrir vos vins favoris tout en bénéficiant de recommandations personnalisées. Inscrivez-vous dès maintenant et plongez dans l'univers fascinant du vin !
+                    </p>
+                </div>
+                
             </div>
         </div>
 
@@ -81,11 +88,26 @@
 
         <div id="section3" class="section">
             <!-- Contenu de la section 3 -->
-            BSNSJS
-            SJNS
+            <h1>Section commentaires & Export :</h1>
+            <ul>
+                {% if commentaires %}
+                    {% for commentaire in commentaires %}
+                        <li style="font-size: 1.5em;">Bouteille : <strong>{{ commentaire[0] }}</strong> => {{ commentaire[1] }}</li><br>
+                    {% endfor %}
+                {% else %}
+                    <li style="font-size: 1.5em;">Aucun commentaire disponible pour le moment.</li>
+                {% endif %}
+            </ul>
+
+            <form action="/export_json" method="get">
+                <button type="submit" class="button-export">Exporter toute la base de données en JSON</button>
+            </form>
+            
+
         </div>
 
     </div>
 
 </body>
 </html>
+

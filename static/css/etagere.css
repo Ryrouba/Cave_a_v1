@@ -1,0 +1,99 @@
+@import url('https://fonts.googleapis.com/css2?family=Satisfy&display=swap');
+
+.fixed-title {
+    position: absolute; /* Garde le titre fixe sur l'écran */
+    top: -15px; /* Remonte l'élément de 20px vers le haut */
+    left: 60px; /* Positionne le titre à 20px de la gauche */
+    z-index: 1000; /* S'assure que le titre est au-dessus des autres éléments */
+    font-size: 48px; /* Ajuste la taille de la police si nécessaire */
+    padding: 10px; /* Ajoute un padding pour espacer le texte des bords */
+}
+
+h1, h3 {
+    font-family: 'Satisfy', cursive; /* Applique Satisfy à l'ensemble du corps */
+    font-size: 24px; /* Taille de police */
+    
+}
+
+.create-etagere form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px; /* Ajoute un espace entre les divs contenant label et input */
+}
+
+.create-etagere div {
+    display: flex;
+    justify-content: space-between; /* Aligne les labels et inputs sur une ligne */
+    width: 500px; /* Utilise toute la largeur du parent */
+    align-items: center; /* Aligne verticalement */
+    font-family: 'Satisfy', cursive;
+}
+
+.create-etagere label {
+    font-size: 18px; /* Taille du texte des labels */
+    margin-right: 10px; /* Espace entre label et input */
+    width: 100%; /* Largeur des labels pour alignement propre */
+    text-align: left; /* Aligne le texte à gauche */
+}
+
+.create-etagere input,
+.create-etagere select {
+    padding: 7px; /* Espace à l'intérieur des champs */
+    border: 1px solid #ccc; /* Bordure légère */
+    font-size: 16px; /* Taille de police uniforme */
+    width: 50%; /* Largeur des inputs pour s'aligner avec les labels */
+    box-sizing: border-box; /* Inclut la bordure dans la largeur totale */
+}
+
+.create-etagere button {
+    padding: 10px 20px; /* Taille du bouton */
+    background-color: #fff; /* Couleur de fond du bouton */
+    border: 1px solid #000; /* Bordure du bouton */
+    cursor: pointer; /* Change le curseur en pointer sur le bouton */
+    margin-top: 15px; /* Espacement avec le dernier input */
+    width: 600px;
+}
+
+.create-etagere button:hover {
+    background-color: #0adc42; /* Couleur de fond au survol */
+}
+
+
+.shelves-container {
+    display: flex;
+    justify-content: space-between; /* Espace entre "Créer une étagère" et "Vos Etagères" */
+    align-items: flex-start; /* Alignement en haut */
+    gap: 100px; /* Espace entre les deux sections */
+    padding: 50px;
+}
+
+.etagere-item {
+    display: flex; /* Utilise flex pour aligner horizontalement */
+    align-items: center; /* Aligne verticalement au centre */
+    justify-content: space-between; /* Espacement entre le texte et le bouton */
+    margin-bottom: 10px; /* Espace entre chaque élément de la liste */
+    width: 500px;
+    
+}
+
+.etagere-item span {
+    font-size: 18px; /* Ajustez la taille de la police si nécessaire */
+}
+
+.etagere-item form {
+    margin: 0; /* Supprime la marge par défaut du formulaire */
+}
+
+
+
+.etagere-item button {
+    padding: 5px 10px; /* Ajustez la taille du bouton si nécessaire */
+    background-color: #fff; /* Couleur de fond du bouton */
+    border: 1px solid #000; /* Bordure du bouton */
+    cursor: pointer; /* Curseur pointer sur le bouton */
+}
+
+.etagere-item button:hover {
+    background-color: #0adc42; /* Couleur du bouton au survol */
+}

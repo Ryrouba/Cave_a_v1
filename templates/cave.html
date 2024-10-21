@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    {% if 'username' in session %}
+    <h1 class="fixed-title">Bonjour, {{ session['username'] }} !</h1>
+        
+        <!-- Conteneur principal pour aligner les sections "Créer une Cave" et "Vos Caves" -->
+        <div class="cave-container">
+        
+            <!-- Formulaire pour créer une cave -->
+            <div class="create-cave">
+                <h3>Créer une Cave</h3>
+                <form action="/cave" method="POST">
+                    <input type="text" id="cave_name" name="cave_name" placeholder="Nom de la Cave" required>
+                    <button type="submit">Création</button>
+                </form>
+            </div>
+
+            <!-- Liste des caves avec bouton de suppression -->
+            <div class="cave-list">
+                <h3>Vos Caves</h3>
+                <ul>
+                    {% if caves %}
+                        {% for cave in caves %}
+                            <li>
+                                <div class="cave-item">
+                                    <span>{{ cave[1] }}</span> <!-- Afficher le nom de la cave -->
+                                    <form action="/supprimer_cave/{{ cave[0] }}" method="POST" > <!--class="delete-form" -->
+                                        <button type="submit">Supprimer</button>
+                                    </form>
+                                </div>
+                            </li>
+                        {% endfor %}
+                    {% else %}
+                        <p>Vous n'avez pas encore de caves.</p>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    {% else %}
+        <p>Vous devez être connecté pour créer ou gérer vos caves.</p>
+        <a href="/login">Se connecter</a>
+    {% endif %}
+
+{% endblock %}
