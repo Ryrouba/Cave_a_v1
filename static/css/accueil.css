@@ -28,6 +28,7 @@ body {
     text-decoration: none;
 }
 
+/* Styles pour le menu quand on passe dessus */
 .menu:hover{
    text-decoration: underline;
 }
@@ -180,7 +181,7 @@ body {
     cursor: pointer;
     position: relative;
     margin-left: 900px; /* Ajuster la distance à droite des commentaires */
-    top: -350px; /
+    top: -50px; /
 }
 
 .button-export:hover {

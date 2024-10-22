@@ -97,8 +97,7 @@ def login():
             notification.send()
 
             return redirect("/signup")
-#-----------------------------------------------------------------------------------------------------------------------
-
+        
 #-----------------------------------------------------------------------------------------------------------------------
 # Route Déconnexion
 #-----------------------------------------------------------------------------------------------------------------------
@@ -107,7 +106,6 @@ def logout():
     session.clear()
     flash('You have been logged out.', 'info')
     return redirect('/')
-#-----------------------------------------------------------------------------------------------------------------------
 
 #-----------------------------------------------------------------------------------------------------------------------
 # Route pour inscription
@@ -128,9 +126,6 @@ def create_user():
             return redirect(url_for('create_user'))  # Redirige vers la page d'inscription en cas d'erreur
     else:
         return render_template('signup.html')
-
-
-#-----------------------------------------------------------------------------------------------------------------------
 
 #-----------------------------------------------------------------------------------------------------------------------
 # Route Bouteille.html
@@ -158,13 +153,26 @@ def bouteille():
             connection = create_connection()
             cursor = connection.cursor()
 
+            # Vérification du nombre de places disponibles
+            cursor.execute("SELECT available_slots FROM shelves WHERE shelf_id = %s", (shelf_id,))
+            available_slots = cursor.fetchone()
+
+            if available_slots and available_slots[0] > 0:
+
             # Requête d'insertion pour la nouvelle bouteille
-            insert_bottle_query = """
-                INSERT INTO bottles (winery, name, type, year, region, comments, personal_rating, community_rating, label_photo, price, shelf_id)
-                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
-            """
-            cursor.execute(insert_bottle_query, (winery, name, type, year, region, comments, personal_rating, community_rating, label_photo, price, shelf_id))
-            connection.commit()  # Ne pas oublier de valider la transaction
+                insert_bottle_query = """
+                    INSERT INTO bottles (winery, name, type, year, region, comments, personal_rating, community_rating, label_photo, price, shelf_id)
+                    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                """
+                cursor.execute(insert_bottle_query, (winery, name, type, year, region, comments, personal_rating, community_rating, label_photo, price, shelf_id))
+
+                # Mise à jour du nombre de places disponibles
+                cursor.execute("UPDATE shelves SET available_slots = available_slots - 1 WHERE shelf_id = %s", (shelf_id,))
+
+                connection.commit()  # Ne pas oublier de valider la transaction
+                flash("Bouteille ajoutée avec succès.")  # Message de succès
+            else:
+                flash("Pas assez de place disponible sur l'étagère.")  # Message d'erreur
 
             cursor.close()
             connection.close()
@@ -216,10 +224,6 @@ def bouteille():
     else:
         return redirect("/accueil")
 
-
-
-#-----------------------------------------------------------------------------------------------------------------------
-
 #-----------------------------------------------------------------------------------------------------------------------
 # Route /Supprimer_bouteille
 #-----------------------------------------------------------------------------------------------------------------------
@@ -233,8 +237,6 @@ def supprimer_bouteille(bottle_id):
     bouteille.supprimer_bouteille(bottle_id)  # Appel de la méthode pour supprimer la bouteille
 
     return redirect(url_for('bouteille'))  # Rediriger vers la page d'affichage des bouteilles
-
-
 
 #-----------------------------------------------------------------------------------------------------------------------
 # Route /Créer_cave
@@ -297,6 +299,7 @@ def supprimer_cave(cave_id):
         print(f"Tentative de suppression d'une cave non existante ou non autorisée: {cave_id}")
     
     return redirect("/cave")  # Rediriger vers la page des caves après la suppression
+
 #-----------------------------------------------------------------------------------------------------------------------
 # Route /Créer_étagère
 #-----------------------------------------------------------------------------------------------------------------------
@@ -388,8 +391,10 @@ def supprimer_etagere(shelf_id):
         print(f"Tentative de suppression d'une étagère non existante ou non autorisée: {shelf_id}")
 
     return redirect("/creer_etagere")  # Rediriger vers la page des étagères après suppression
+
 #-----------------------------------------------------------------------------------------------------------------------
-# Fonction personnalisée pour convertir Decimal en float
+# Export cave en JSON
+#-----------------------------------------------------------------------------------------------------------------------
 class DecimalEncoder(json.JSONEncoder):
     def default(self, obj):
         if isinstance(obj, Decimal):
@@ -398,29 +403,45 @@ class DecimalEncoder(json.JSONEncoder):
 
 @app.route("/export_json", methods=["GET"])
 def export_json():
+    if 'user_id' not in session:
+        return redirect("/accueil")  # Rediriger si l'utilisateur n'est pas connecté
+    
+    user_id = session['user_id']  # Obtenir l'utilisateur connecté
+
     connection = create_connection()
     cursor = connection.cursor()
 
-    # Obtenir la liste des tables dans la base de données
-    cursor.execute("SHOW TABLES")
-    tables = cursor.fetchall()
-
+    # Dictionnaire pour stocker les tables à exporter
     database_export = {}
 
-    # Itérer sur chaque table
-    for (table_name,) in tables:
-        # Sélectionner toutes les données de chaque table
-        cursor.execute(f"SELECT * FROM {table_name}")
-        rows = cursor.fetchall()
+    # 1. Exporter la table 'users' pour l'utilisateur connecté
+    cursor.execute("SELECT * FROM users WHERE user_id = %s", (user_id,))
+    users_data = cursor.fetchall()
+    column_names_users = [i[0] for i in cursor.description]
+    database_export['users'] = [dict(zip(column_names_users, user)) for user in users_data]
 
-        # Obtenir les noms des colonnes de la table
-        column_names = [i[0] for i in cursor.description]
+    # 2. Exporter la table 'shelves' pour les étagères appartenant à l'utilisateur connecté
+    cursor.execute("""
+        SELECT shelves.* 
+        FROM shelves 
+        INNER JOIN caves ON shelves.cave_id = caves.cave_id 
+        WHERE caves.user_id = %s
+    """, (user_id,))
+    shelves_data = cursor.fetchall()
+    column_names_shelves = [i[0] for i in cursor.description]
+    database_export['shelves'] = [dict(zip(column_names_shelves, shelf)) for shelf in shelves_data]
 
-        # Convertir les résultats en une liste de dictionnaires
-        table_data = [dict(zip(column_names, row)) for row in rows]
-
-        # Ajouter les données de la table au dictionnaire principal
-        database_export[table_name] = table_data
+    # 3. Exporter la table 'bottles' pour les bouteilles dans les étagères de l'utilisateur connecté
+    cursor.execute("""
+        SELECT bottles.* 
+        FROM bottles 
+        INNER JOIN shelves ON bottles.shelf_id = shelves.shelf_id
+        INNER JOIN caves ON shelves.cave_id = caves.cave_id
+        WHERE caves.user_id = %s
+    """, (user_id,))
+    bottles_data = cursor.fetchall()
+    column_names_bottles = [i[0] for i in cursor.description]
+    database_export['bottles'] = [dict(zip(column_names_bottles, bottle)) for bottle in bottles_data]
 
     # Sauvegarder les données dans un fichier JSON avec l'encodeur personnalisé
     with open("exported_database.json", "w") as json_file:
@@ -433,10 +454,7 @@ def export_json():
     return send_file("exported_database.json", as_attachment=True)
 
 
-
-
-
-
+#-----------------------------------------------------------------------------------------------------------------------
 
 
 if __name__ == '__main__':

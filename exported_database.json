@@ -1,19 +1,32 @@
 {
-    "bottles": [
+    "users": [
         {
-            "bottle_id": 1,
+            "user_id": 35,
+            "username": "ryan",
+            "password": "ryan"
+        }
+    ],
+    "shelves": [
+        {
             "shelf_id": 30,
-            "winery": "Domaine Roman\u00e9e-Conti",
-            "name": "Roman\u00e9e-Conti",
-            "type": "Vin Rouge",
-            "year": 2016,
-            "region": "Bourgogne",
-            "comments": "Tr\u00e8s Rouge",
-            "personal_rating": 17.0,
-            "community_rating": 15.0,
-            "label_photo": "https://raw.githubusercontent.com/Ryrouba/Cave_a_v1/main/static/images/romanee-conti-2016.png",
-            "price": 2000.0
+            "cave_id": 41,
+            "shelf_name": "Etage 1",
+            "shelf_number": 1,
+            "region": "savoie",
+            "available_slots": 6,
+            "bottles_per_shelf": 3
         },
+        {
+            "shelf_id": 32,
+            "cave_id": 47,
+            "shelf_name": "Etage 2-1",
+            "shelf_number": 1,
+            "region": "Savoie",
+            "available_slots": 3,
+            "bottles_per_shelf": 2
+        }
+    ],
+    "bottles": [
         {
             "bottle_id": 2,
             "shelf_id": 30,
@@ -43,6 +56,20 @@
             "price": 50.0
         },
         {
+            "bottle_id": 14,
+            "shelf_id": 30,
+            "winery": "Domaine Roman\u00e9e Conti",
+            "name": "Roman\u00e9e Conti",
+            "type": "Vin Rouge",
+            "year": 2016,
+            "region": "Bourgogne",
+            "comments": "Vachement Rouge",
+            "personal_rating": 16.0,
+            "community_rating": 18.0,
+            "label_photo": "https://raw.githubusercontent.com/Ryrouba/Cave_a_v1/main/static/images/romanee-conti-2016.png",
+            "price": 2000.0
+        },
+        {
             "bottle_id": 4,
             "shelf_id": 32,
             "winery": "Domaine Leroy",
@@ -55,106 +82,6 @@
             "community_rating": 16.0,
             "label_photo": "https://raw.githubusercontent.com/Ryrouba/Cave_a_v1/main/static/images/musigny-grand-cru.jpeg",
             "price": 3.0
-        },
-        {
-            "bottle_id": 9,
-            "shelf_id": 38,
-            "winery": "a",
-            "name": "a",
-            "type": "a",
-            "year": 1,
-            "region": "q",
-            "comments": "q",
-            "personal_rating": 12.0,
-            "community_rating": 12.0,
-            "label_photo": "z",
-            "price": 12.0
-        },
-        {
-            "bottle_id": 10,
-            "shelf_id": 37,
-            "winery": "a",
-            "name": "a",
-            "type": "a",
-            "year": 1,
-            "region": "a",
-            "comments": "a",
-            "personal_rating": 12.0,
-            "community_rating": 12.0,
-            "label_photo": "z",
-            "price": 12.0
-        }
-    ],
-    "caves": [
-        {
-            "cave_id": 40,
-            "user_id": 36,
-            "cave_name": "cave5"
-        },
-        {
-            "cave_id": 41,
-            "user_id": 35,
-            "cave_name": "cave1"
-        },
-        {
-            "cave_id": 47,
-            "user_id": 35,
-            "cave_name": "cave 2"
-        },
-        {
-            "cave_id": 49,
-            "user_id": 35,
-            "cave_name": "nanou"
-        }
-    ],
-    "shelves": [
-        {
-            "shelf_id": 30,
-            "cave_id": 41,
-            "shelf_name": "Etage 1",
-            "shelf_number": 1,
-            "region": "savoie",
-            "available_slots": 7,
-            "bottles_per_shelf": 3
-        },
-        {
-            "shelf_id": 32,
-            "cave_id": 47,
-            "shelf_name": "Etage 2-1",
-            "shelf_number": 1,
-            "region": "Savoie",
-            "available_slots": 4,
-            "bottles_per_shelf": 2
-        },
-        {
-            "shelf_id": 37,
-            "cave_id": 49,
-            "shelf_name": "rr2",
-            "shelf_number": 23,
-            "region": "a",
-            "available_slots": 2,
-            "bottles_per_shelf": 2
-        },
-        {
-            "shelf_id": 38,
-            "cave_id": 40,
-            "shelf_name": "cave1-5",
-            "shelf_number": 1,
-            "region": "savoie",
-            "available_slots": 4,
-            "bottles_per_shelf": 1
-        }
-    ],
-    "users": [
-        {
-            "user_id": 35,
-            "username": "ryan",
-            "password": "ryan"
-        },
-        {
-            "user_id": 36,
-            "username": "colin",
-            "password": "colin"
         }
     ]
 }

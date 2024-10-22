@@ -87,7 +87,6 @@
         </div>
 
         <div id="section3" class="section">
-            <!-- Contenu de la section 3 -->
             <h1>Section commentaires & Export :</h1>
             <ul>
                 {% if commentaires %}
@@ -99,9 +98,10 @@
                 {% endif %}
             </ul>
 
+            <!-- Bouton export JSON -->
             <form action="/export_json" method="get">
-                <button type="submit" class="button-export">Exporter toute la base de données en JSON</button>
-            </form>
+                <button type="submit" class="button-export">Exporter les caves en JSON</button>
+            </form>            
             
 
         </div>
